@@ -1,3 +1,4 @@
 ﻿  main.cpp
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\shader.h(32): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.exe
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.pdb (Partial PDB)
