@@ -3,7 +3,8 @@
 #include <SDL\SDL_opengl.h>
 #include <SOIL\SOIL.h>
 
-#include "Shader.h"
+#include "Shader.h"//without texture class: 148 lines of code
+#include "Texture2D.h"//with texture class: ??? lines of code
 
 //constants
 const int SCREEN_WIDTH = 800; 
@@ -17,7 +18,7 @@ int main(int argc,char* argv[])
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 	//create sdl window
@@ -39,11 +40,11 @@ int main(int argc,char* argv[])
 
 	//setup vertices for triangle
 	GLfloat vertices[] = {
-		//Position      Color             Texcoords
-		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
-		0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
-		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
+		// Positions          // Colors           // Texture Coords
+		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // Top Right
+		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // Bottom Right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // Top Left 
 	};
 
 	//upload and copy the vertex data 
@@ -54,13 +55,13 @@ int main(int argc,char* argv[])
 	GLuint EBO;
 	glGenBuffers(1, &EBO);
 	
-	GLuint elements[] = {
-		0, 1, 2,
-		2, 3, 0
+	GLuint indices[] = {
+		0, 1, 3,//first triangle
+		1, 2, 3//second triangle
 	};
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	//create and compile the shaders
 	Shader colorShader;
@@ -69,31 +70,19 @@ int main(int argc,char* argv[])
 	//specify the layout of the vertex data
 	GLint posAttrib = glGetAttribLocation(colorShader.GetProgramID(), "position");
 	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), 0);
+	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
 
 	GLint colorAttrib = glGetAttribLocation(colorShader.GetProgramID(), "color");
 	glEnableVertexAttribArray(colorAttrib);
-	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
+	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
 	GLint texAttrib = glGetAttribLocation(colorShader.GetProgramID(), "texcoord");
 	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(5 * sizeof(GLfloat)));
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
 
 	//load texture
-	GLuint tex;
-	glGenTextures(1, &tex);
-	glBindTexture(GL_TEXTURE_2D, tex);
-
-	int tWidth, tHeight;
-	unsigned char* image = SOIL_load_image("res/textures/hotchef.jpg", &tWidth, &tHeight, 0, SOIL_LOAD_RGB);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-	SOIL_free_image_data(image);
-
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-
+	Texture2D texture;
+	texture.Load("res/textures/awesomeface.png", false);
 
 	SDL_Event windowEvent;
 	bool quit = false;
@@ -123,6 +112,9 @@ int main(int argc,char* argv[])
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		//bind teh texture
+		texture.Bind();
+
 		colorShader.Use();
 
 		//draw the triangle from the 3 vertices
@@ -132,8 +124,6 @@ int main(int argc,char* argv[])
 	}
 
 	//delete arrays buffers and shaders & textures
-	glDeleteTextures(1, &tex);
-
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);
