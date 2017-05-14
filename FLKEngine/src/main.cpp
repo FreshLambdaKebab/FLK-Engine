@@ -1,11 +1,13 @@
 #include <GL\glew.h>
 #include <SDL\SDL.h>
 #include <SDL\SDL_opengl.h>
+#include <SOIL\SOIL.h>
 
 #include "Shader.h"
 
-const int SCREEN_WIDTH = 800; //without shader class: 158 lines of code
-const int SCREEN_HEIGHT = 600;//with shader class: 120 lines of code
+//constants
+const int SCREEN_WIDTH = 800; 
+const int SCREEN_HEIGHT = 600;
 const std::string WINDOW_TITLE = "God damn fucking window";
 
 int main(int argc,char* argv[])
@@ -37,10 +39,11 @@ int main(int argc,char* argv[])
 
 	//setup vertices for triangle
 	GLfloat vertices[] = {
-		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // Top-left
-		0.5f,  0.5f, 0.0f, 1.0f, 0.0f, // Top-right
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // Bottom-right
-		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f  // Bottom-left
+		//Position      Color             Texcoords
+		-0.5f,  0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left
+		0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, // Top-right
+		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Bottom-right
+		-0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Bottom-left
 	};
 
 	//upload and copy the vertex data 
@@ -66,11 +69,31 @@ int main(int argc,char* argv[])
 	//specify the layout of the vertex data
 	GLint posAttrib = glGetAttribLocation(colorShader.GetProgramID(), "position");
 	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
+	glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), 0);
 
 	GLint colorAttrib = glGetAttribLocation(colorShader.GetProgramID(), "color");
 	glEnableVertexAttribArray(colorAttrib);
-	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
+	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(2 * sizeof(GLfloat)));
+
+	GLint texAttrib = glGetAttribLocation(colorShader.GetProgramID(), "texcoord");
+	glEnableVertexAttribArray(texAttrib);
+	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7 * sizeof(GLfloat), (void*)(5 * sizeof(GLfloat)));
+
+	//load texture
+	GLuint tex;
+	glGenTextures(1, &tex);
+	glBindTexture(GL_TEXTURE_2D, tex);
+
+	int tWidth, tHeight;
+	unsigned char* image = SOIL_load_image("res/textures/hotchef.jpg", &tWidth, &tHeight, 0, SOIL_LOAD_RGB);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tWidth, tHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+	SOIL_free_image_data(image);
+
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S,GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T,GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+
 
 	SDL_Event windowEvent;
 	bool quit = false;
@@ -97,18 +120,20 @@ int main(int argc,char* argv[])
 
 		//do shit
 		//clear the screen to a desired color
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		colorShader.Use();
 
 		//draw the triangle from the 3 vertices
-		glDrawElements(GL_TRIANGLES,6, GL_UNSIGNED_INT,0);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		SDL_GL_SwapWindow(window);
 	}
 
-	//delete arrays buffers and shaders
+	//delete arrays buffers and shaders & textures
+	glDeleteTextures(1, &tex);
+
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
 	glDeleteVertexArrays(1, &VAO);
