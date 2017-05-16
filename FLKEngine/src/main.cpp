@@ -2,9 +2,13 @@
 #include <SDL\SDL.h>
 #include <SDL\SDL_opengl.h>
 #include <SOIL\SOIL.h>
+#include <glm\glm.hpp>
+#include <glm\gtc\matrix_transform.hpp>
+#include <glm\gtc\type_ptr.hpp>
 
-#include "Shader.h"//without texture class: 148 lines of code
-#include "Texture2D.h"//with texture class: ??? lines of code
+#include "Shader.h"
+#include "Texture2D.h"
+#include "Sprite.h"
 
 //constants
 const int SCREEN_WIDTH = 800; 
@@ -66,6 +70,13 @@ int main(int argc,char* argv[])
 	//create and compile the shaders
 	Shader colorShader;
 	colorShader.Load("res/shaders/colorShader.vert", "res/shaders/colorShader.frag");
+	Shader spriteShader;
+	spriteShader.Load("res/shaders/spriteShader.vert", "res/shaders/spriteShader.frag");
+	// Configure shaders
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(SCREEN_WIDTH),
+		static_cast<GLfloat>(SCREEN_HEIGHT), 0.0f, -1.0f, 1.0f);
+	spriteShader.SetInteger("image", 0);
+	spriteShader.SetMatrix4("projection", projection,GL_TRUE);
 
 	//specify the layout of the vertex data
 	GLint posAttrib = glGetAttribLocation(colorShader.GetProgramID(), "position");
@@ -82,7 +93,10 @@ int main(int argc,char* argv[])
 
 	//load texture
 	Texture2D texture;
-	texture.Load("res/textures/awesomeface.png", false);
+	texture.Load("res/textures/awesomeface.png", GL_TRUE);
+	
+	//create sprite
+	Sprite sprite(spriteShader);
 
 	SDL_Event windowEvent;
 	bool quit = false;
@@ -109,16 +123,17 @@ int main(int argc,char* argv[])
 
 		//do shit
 		//clear the screen to a desired color
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//bind teh texture
-		texture.Bind();
+		//texture.Bind();
 
-		colorShader.Use();
+		//colorShader.Use();
+		sprite.Draw(texture, glm::vec2(100, 100),glm::vec2(100,100));
 
 		//draw the triangle from the 3 vertices
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		SDL_GL_SwapWindow(window);
 	}

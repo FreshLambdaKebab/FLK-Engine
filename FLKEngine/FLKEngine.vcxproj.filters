@@ -9,9 +9,11 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
+    <ClCompile Include="src\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture2D.h" />
+    <ClInclude Include="src\Sprite.h" />
   </ItemGroup>
 </Project>
