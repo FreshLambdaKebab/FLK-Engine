@@ -10,10 +10,12 @@
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
+    <ClCompile Include="src\InputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\Sprite.h" />
+    <ClInclude Include="src\InputManager.h" />
   </ItemGroup>
 </Project>

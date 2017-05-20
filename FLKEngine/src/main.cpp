@@ -4,19 +4,33 @@
 #include <SOIL\SOIL.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
+#include <GLFW\glfw3.h>
 
 #include "Shader.h"
 #include "Texture2D.h"
+#include "InputManager.h"
 
 //constants
 const int SCREEN_WIDTH = 800; 
 const int SCREEN_HEIGHT = 600;
 const std::string WINDOW_TITLE = "God damn fucking window";
 
+//camera
+glm::vec3 cameraPos = { 0.0f,0.0f,3.0f };
+glm::vec3 cameraFront = { 0.0f,0.0f,-1.0f };
+glm::vec3 cameraUp = { 0.0f,1.0f,0.0f };
+
+// Deltatime
+GLfloat deltaTime = 0.0f;
+GLfloat lastFrame = 0.0f;
+
+void DoMovement(SDL_Event& windowEvent, InputManager& input);
+
 int main(int argc,char* argv[])
 {
 	//std::cout << "Hello fuckwits of america!!!" << std::endl;
 	SDL_Init(SDL_INIT_EVERYTHING);
+	glfwInit();//only using glfw for timing (glfwgettime)
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -85,6 +99,18 @@ int main(int argc,char* argv[])
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
+	glm::vec3 cubePositions[] = {
+		glm::vec3(0.0f,  0.0f,  0.0f),
+		glm::vec3(2.0f,  5.0f, -15.0f),
+		glm::vec3(-1.5f, -2.2f, -2.5f),
+		glm::vec3(-3.8f, -2.0f, -12.3f),
+		glm::vec3(2.4f, -0.4f, -3.5f),
+		glm::vec3(-1.7f,  3.0f, -7.5f),
+		glm::vec3(1.3f, -2.0f, -2.5f),
+		glm::vec3(1.5f,  2.0f, -2.5f),
+		glm::vec3(1.5f,  0.2f, -1.5f),
+		glm::vec3(-1.3f,  1.0f, -1.5f)
+	};
 
 	//upload and copy the vertex data 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -123,11 +149,17 @@ int main(int argc,char* argv[])
 	Texture2D texture;
 	texture.Load("res/textures/awesomeface.png",GL_FALSE);
 
+	InputManager inputManager;
+
 	SDL_Event windowEvent;
 	bool quit = false;
 	//main loop
 	while (!quit)
 	{	
+		// Calculate deltatime of current frame
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 		while(SDL_PollEvent(&windowEvent))
 		{
 			switch (windowEvent.type)
@@ -142,8 +174,13 @@ int main(int argc,char* argv[])
 				//exit the application if escape was pressed
 				if (windowEvent.key.keysym.sym == SDLK_ESCAPE)
 					quit = true;
+				inputManager.PressKey(windowEvent.key.keysym.sym);
+				break;
+			case SDL_KEYUP:
+				inputManager.ReleaseKey(windowEvent.key.keysym.sym);
 				break;
 			}
+			DoMovement(windowEvent,inputManager);
 		}
 
 		//do shit
@@ -155,20 +192,33 @@ int main(int argc,char* argv[])
 		texture.Bind();
 		colorShader.Use();
 
-		//create transformations
-		glm::mat4 model;
+		//create camera/view transformations
 		glm::mat4 view;
+		GLfloat radius = 10.0f;
+		GLfloat camX = sin(glfwGetTime()) * radius;
+		GLfloat camZ = cos(glfwGetTime()) * radius;
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		//projection
 		glm::mat4 projection;
-		model = glm::rotate(model, glm::radians(-50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-		view = glm::translate(view, glm::vec3(0.0f,0.0f,-3.0f));
 		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(SCREEN_WIDTH) / static_cast<GLfloat>(SCREEN_HEIGHT), 0.1f, 100.0f);
 		//get the uniform locations & pass them to the shader
-		colorShader.SetMatrix4("model", model, GL_TRUE);
 		colorShader.SetMatrix4("view", view, GL_TRUE);
 		colorShader.SetMatrix4("projection", projection, GL_TRUE);
 
-		//draw the triangle from the 3 vertices
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		for (GLuint i = 0; i < 10; i++)
+		{
+			//calculate the model matrix for each object
+			glm::mat4 model;
+			model = glm::translate(model, cubePositions[i]);
+			GLfloat angle = 20.0f * i;
+			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
+			colorShader.SetMatrix4("model", model, GL_TRUE);
+
+			//draw the triangle from the 3 vertices
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		}
 
 		SDL_GL_SwapWindow(window);
 	}
@@ -182,4 +232,18 @@ int main(int argc,char* argv[])
 	SDL_Quit();
 
 	return 0;
+}
+
+void DoMovement(SDL_Event& windowEvent, InputManager& input)
+{
+	//camera movement
+	GLfloat cameraSpeed = 15.0f *deltaTime;
+	if (input.IsKeyDown(SDLK_w))
+		cameraPos += cameraSpeed * cameraFront;
+	if (input.IsKeyDown(SDLK_a))
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+	if (input.IsKeyDown(SDLK_s))
+		cameraPos -= cameraSpeed * cameraFront;
+	if (input.IsKeyDown(SDLK_d))
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 }
