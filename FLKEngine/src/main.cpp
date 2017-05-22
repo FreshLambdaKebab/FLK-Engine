@@ -19,12 +19,19 @@ const std::string WINDOW_TITLE = "God damn fucking window";
 glm::vec3 cameraPos = { 0.0f,0.0f,3.0f };
 glm::vec3 cameraFront = { 0.0f,0.0f,-1.0f };
 glm::vec3 cameraUp = { 0.0f,1.0f,0.0f };
+GLfloat yaw = -90.0f;
+GLfloat pitch = 0.0f;
+GLfloat lastX = SCREEN_WIDTH / 2;
+GLfloat lastY = SCREEN_HEIGHT / 2;
+GLfloat fov = 45.0f;
+bool keys[1024];
 
 // Deltatime
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
-void DoMovement(SDL_Event& windowEvent, InputManager& input);
+void DoMovement(InputManager& input);
+void mouse_callback(int xpos,int ypos);
 
 int main(int argc,char* argv[])
 {
@@ -38,9 +45,11 @@ int main(int argc,char* argv[])
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
 
 	//create sdl window
-	SDL_Window* window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,SCREEN_WIDTH,SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+	SDL_Window* window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	SDL_GLContext context = SDL_GL_CreateContext(window);
-	
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_CaptureMouse(SDL_TRUE);
+
 	//initialize glew
 	glewExperimental = GL_TRUE;
 	glewInit();
@@ -170,17 +179,20 @@ int main(int argc,char* argv[])
 			case SDL_WINDOWEVENT_CLOSE:
 				quit = true;
 				break;
+			case SDL_MOUSEMOTION:
+				inputManager.SetMouseCoords((float)windowEvent.motion.x, (float)windowEvent.motion.y);
+				break;
 			case SDL_KEYDOWN:
+				inputManager.PressKey(windowEvent.key.keysym.sym);
 				//exit the application if escape was pressed
 				if (windowEvent.key.keysym.sym == SDLK_ESCAPE)
 					quit = true;
-				inputManager.PressKey(windowEvent.key.keysym.sym);
 				break;
 			case SDL_KEYUP:
 				inputManager.ReleaseKey(windowEvent.key.keysym.sym);
 				break;
 			}
-			DoMovement(windowEvent,inputManager);
+
 		}
 
 		//do shit
@@ -200,11 +212,14 @@ int main(int argc,char* argv[])
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 		//projection
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), static_cast<GLfloat>(SCREEN_WIDTH) / static_cast<GLfloat>(SCREEN_HEIGHT), 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(fov), static_cast<GLfloat>(SCREEN_WIDTH) / static_cast<GLfloat>(SCREEN_HEIGHT), 0.1f, 100.0f);
 		//get the uniform locations & pass them to the shader
 		colorShader.SetMatrix4("view", view, GL_TRUE);
 		colorShader.SetMatrix4("projection", projection, GL_TRUE);
 
+		//move camera around
+		DoMovement(inputManager);
+		mouse_callback((float)inputManager.GetMouseCoords().x, (float)inputManager.GetMouseCoords().y);
 
 		for (GLuint i = 0; i < 10; i++)
 		{
@@ -234,9 +249,10 @@ int main(int argc,char* argv[])
 	return 0;
 }
 
-void DoMovement(SDL_Event& windowEvent, InputManager& input)
+void DoMovement( InputManager& input)
 {
 	//camera movement
+	//keyboard input
 	GLfloat cameraSpeed = 15.0f *deltaTime;
 	if (input.IsKeyDown(SDLK_w))
 		cameraPos += cameraSpeed * cameraFront;
@@ -246,4 +262,41 @@ void DoMovement(SDL_Event& windowEvent, InputManager& input)
 		cameraPos -= cameraSpeed * cameraFront;
 	if (input.IsKeyDown(SDLK_d))
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
+}
+
+bool firstMouse = true;
+void mouse_callback( int xpos, int ypos)
+{
+	SDL_GetMouseState(&xpos, &ypos);
+
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	GLfloat xoffset = xpos - lastX;
+	GLfloat yoffset = lastY - ypos;
+	lastX = xpos;
+	lastY = ypos;
+
+	GLfloat sensitivity = 0.15f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	glm::vec3 front;
+	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	front.y = sin(glm::radians(pitch));
+	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(front);
 }

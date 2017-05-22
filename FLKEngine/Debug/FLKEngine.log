@@ -1,7 +1,12 @@
 ﻿  main.cpp
 c:\users\duran_000\documents\github\flk-engine\flkengine\src\shader.h(32): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(160): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(198): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(199): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(169): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(210): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(211): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(222): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(275): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(276): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(282): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(283): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.exe
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.pdb (Partial PDB)
