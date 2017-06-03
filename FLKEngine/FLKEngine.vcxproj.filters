@@ -11,11 +11,13 @@
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\InputManager.h" />
+    <ClInclude Include="src\Camera.h" />
   </ItemGroup>
 </Project>

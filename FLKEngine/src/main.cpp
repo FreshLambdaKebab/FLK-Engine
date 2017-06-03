@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Texture2D.h"
 #include "InputManager.h"
+#include "Camera.h"
 
 //constants
 const int SCREEN_WIDTH = 800; 
@@ -16,11 +17,7 @@ const int SCREEN_HEIGHT = 600;
 const std::string WINDOW_TITLE = "God damn fucking window";
 
 //camera
-glm::vec3 cameraPos = { 0.0f,0.0f,3.0f };
-glm::vec3 cameraFront = { 0.0f,0.0f,-1.0f };
-glm::vec3 cameraUp = { 0.0f,1.0f,0.0f };
-GLfloat yaw = -90.0f;
-GLfloat pitch = 0.0f;
+Camera camera(glm::vec3(0.0f, 0.0f, 1.0f));
 GLfloat lastX = SCREEN_WIDTH / 2;
 GLfloat lastY = SCREEN_HEIGHT / 2;
 GLfloat fov = 45.0f;
@@ -191,6 +188,7 @@ int main(int argc,char* argv[])
 			case SDL_KEYUP:
 				inputManager.ReleaseKey(windowEvent.key.keysym.sym);
 				break;
+			
 			}
 
 		}
@@ -205,11 +203,8 @@ int main(int argc,char* argv[])
 		colorShader.Use();
 
 		//create camera/view transformations
-		glm::mat4 view;
-		GLfloat radius = 10.0f;
-		GLfloat camX = sin(glfwGetTime()) * radius;
-		GLfloat camZ = cos(glfwGetTime()) * radius;
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		glm::mat4 view = camera.GetViewMatrix();
+		
 		//projection
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(fov), static_cast<GLfloat>(SCREEN_WIDTH) / static_cast<GLfloat>(SCREEN_HEIGHT), 0.1f, 100.0f);
@@ -255,14 +250,13 @@ void DoMovement( InputManager& input)
 	//keyboard input
 	GLfloat cameraSpeed = 15.0f *deltaTime;
 	if (input.IsKeyDown(SDLK_w))
-		cameraPos += cameraSpeed * cameraFront;
+		camera.ProcessKeyboard(Cam_Movement::FORWARD, deltaTime);
 	if (input.IsKeyDown(SDLK_a))
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		camera.ProcessKeyboard(Cam_Movement::LEFT, deltaTime);
 	if (input.IsKeyDown(SDLK_s))
-		cameraPos -= cameraSpeed * cameraFront;
+		camera.ProcessKeyboard(Cam_Movement::BACKWARD, deltaTime);
 	if (input.IsKeyDown(SDLK_d))
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-
+		camera.ProcessKeyboard(Cam_Movement::RIGHT, deltaTime);
 }
 
 bool firstMouse = true;
@@ -286,17 +280,6 @@ void mouse_callback( int xpos, int ypos)
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
 
-	yaw += xoffset;
-	pitch += yoffset;
-
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
-
-	glm::vec3 front;
-	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
-	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(front);
+	camera.ProcessMouse(xoffset, yoffset);
 }
+
