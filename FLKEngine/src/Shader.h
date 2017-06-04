@@ -14,7 +14,9 @@ public:
 
 	//load and read shader from file and compile it 
 	void Load(const std::string& vShaderFile,const std::string& fShaderFile);
-	void Use();
+	//compiles the shader from the given source
+	void Compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource = nullptr);
+	Shader& Use();
 
 	//utility functions
 	inline void SetFloat(const GLchar* name, GLfloat value, GLboolean useShader = false)
@@ -45,21 +47,21 @@ public:
 
 		glUniform2f(glGetUniformLocation(m_programID, name), value.x, value.y);
 	}
-	inline void SetVector3f(const GLchar * name, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader)
+	inline void SetVector3f(const GLchar * name, GLfloat x, GLfloat y, GLfloat z, GLboolean useShader = false)
 	{
 		if (useShader)
 			this->Use();
 
 		glUniform3f(glGetUniformLocation(m_programID, name), x, y, z);
 	}
-	inline void SetVector3f(const GLchar * name, glm::vec3 & value, GLboolean useShader)
+	inline void SetVector3f(const GLchar * name, glm::vec3 & value, GLboolean useShader = false)
 	{
 		if (useShader)
 			this->Use();
 
 		glUniform3f(glGetUniformLocation(m_programID, name), value.x, value.y, value.z);
 	}
-	inline void SetVector4f(const GLchar * name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLboolean useShader)
+	inline void SetVector4f(const GLchar * name, GLfloat x, GLfloat y, GLfloat z, GLfloat w, GLboolean useShader =false)
 	{
 		if (useShader)
 			this->Use();
@@ -85,9 +87,6 @@ public:
 	GLuint GetProgramID() const { return m_programID; }
 
 private:
-	//compiles the shader from the given source
-	void Compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource = nullptr);
-
 	void CheckCompileErrors(GLuint object, const std::string& type);
 
 	GLuint m_programID;

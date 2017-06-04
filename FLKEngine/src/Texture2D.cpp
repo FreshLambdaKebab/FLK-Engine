@@ -39,7 +39,7 @@ void Texture2D::Generate(const GLuint & width, const GLuint & height, unsigned c
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture2D::Bind() const
+void Texture2D::Bind()const
 {
 	glBindTexture(GL_TEXTURE_2D, m_ID);
 }

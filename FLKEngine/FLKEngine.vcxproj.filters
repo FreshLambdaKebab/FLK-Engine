@@ -12,6 +12,8 @@
     <ClCompile Include="src\Sprite.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\TextRenderer.cpp" />
+    <ClCompile Include="src\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h" />
@@ -19,5 +21,7 @@
     <ClInclude Include="src\Sprite.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\TextRenderer.h" />
+    <ClInclude Include="src\ResourceManager.h" />
   </ItemGroup>
 </Project>

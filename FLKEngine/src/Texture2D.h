@@ -14,7 +14,12 @@ public:
 	void Load(const GLchar* file,GLboolean alpha);
 
 	//getters and setters
-	GLuint GetID()const { return m_ID; }
+	GLuint& GetID(){ return m_ID; }
+	GLuint GetInternalFormat() { return m_internalFormat; }
+	GLuint GetImageFormat() { return m_imageFormat; }
+
+	void SetInternalFormat(GLuint format) { m_internalFormat = format; }
+	void SetImageFormat(GLuint format) { m_imageFormat = format; }
 
 private:
 	//every texture object has an ID, and also width and height

@@ -6,10 +6,11 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <GLFW\glfw3.h>
 
-#include "Shader.h"
 #include "Texture2D.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "TextRenderer.h"
+#include "ResourceManager.h"
 
 //constants
 const int SCREEN_WIDTH = 800; 
@@ -51,6 +52,12 @@ int main(int argc,char* argv[])
 	glewExperimental = GL_TRUE;
 	glewInit();
 	glEnable(GL_DEPTH_TEST);
+
+	// Define the viewport dimensions
+	//glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//glEnable(GL_CULL_FACE);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//create a vertex array object
 	GLuint VAO;
@@ -135,23 +142,23 @@ int main(int argc,char* argv[])
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	//create and compile the shaders
-	Shader colorShader;
-	colorShader.Load("res/shaders/colorShader.vert", "res/shaders/colorShader.frag");
+	ResourceManager::LoadShader("res/shaders/colorShader.vert", "res/shaders/colorShader.frag", nullptr, "colorShader");
 
 	//specify the layout of the vertex data
-	GLint posAttrib = glGetAttribLocation(colorShader.GetProgramID(), "position");
+	GLint posAttrib = glGetAttribLocation(ResourceManager::GetShader("colorShader").GetProgramID(), "position");
 	glEnableVertexAttribArray(posAttrib);
 	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
 
-	GLint colorAttrib = glGetAttribLocation(colorShader.GetProgramID(), "color");
+	GLint colorAttrib = glGetAttribLocation(ResourceManager::GetShader("colorShader").GetProgramID(), "color");
 	glEnableVertexAttribArray(colorAttrib);
 	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
-	GLint texAttrib = glGetAttribLocation(colorShader.GetProgramID(), "texcoord");
+	GLint texAttrib = glGetAttribLocation(ResourceManager::GetShader("colorShader").GetProgramID(), "texcoord");
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
 	//load texture
+	//ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
 	Texture2D texture;
 	texture.Load("res/textures/awesomeface.png",GL_FALSE);
 
@@ -200,7 +207,8 @@ int main(int argc,char* argv[])
 
 		//bind teh texture
 		texture.Bind();
-		colorShader.Use();
+		ResourceManager::GetShader("colorShader").Use();
+		//ResourceManager::GetTexture("face").Bind();
 
 		//create camera/view transformations
 		glm::mat4 view = camera.GetViewMatrix();
@@ -209,8 +217,8 @@ int main(int argc,char* argv[])
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(fov), static_cast<GLfloat>(SCREEN_WIDTH) / static_cast<GLfloat>(SCREEN_HEIGHT), 0.1f, 100.0f);
 		//get the uniform locations & pass them to the shader
-		colorShader.SetMatrix4("view", view, GL_TRUE);
-		colorShader.SetMatrix4("projection", projection, GL_TRUE);
+		ResourceManager::GetShader("colorShader").SetMatrix4("view", view, GL_TRUE);
+		ResourceManager::GetShader("colorShader").SetMatrix4("projection", projection, GL_TRUE);
 
 		//move camera around
 		DoMovement(inputManager);
@@ -223,7 +231,7 @@ int main(int argc,char* argv[])
 			model = glm::translate(model, cubePositions[i]);
 			GLfloat angle = 20.0f * i;
 			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
-			colorShader.SetMatrix4("model", model, GL_TRUE);
+			ResourceManager::GetShader("colorShader").SetMatrix4("model", model, GL_TRUE);
 
 			//draw the triangle from the 3 vertices
 			glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -232,6 +240,8 @@ int main(int argc,char* argv[])
 
 		SDL_GL_SwapWindow(window);
 	}
+
+	ResourceManager::Clear();
 
 	//delete arrays buffers and shaders & textures
 	glDeleteBuffers(1, &VBO);

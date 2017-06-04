@@ -15,42 +15,40 @@ Shader::~Shader()
 {
 }
 
-void Shader::Compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource)
+void Shader::Compile(const GLchar * vertexSource, const GLchar * fragmentSource, const GLchar * geometrySource)
 {
+	GLuint sVertex, sFragment, gShader;
 	//vertex shader
-	m_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(m_vertexShaderID, 1, &vertexSource, NULL);
-	glCompileShader(m_vertexShaderID);
-	CheckCompileErrors(m_vertexShaderID, "VERTEX");
-
+	sVertex = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(sVertex, 1, &vertexSource, NULL);
+	glCompileShader(sVertex);
+	CheckCompileErrors(sVertex, "VERTEX");
 	//fragment
-	m_fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(m_fragmentShaderID, 1, &fragmentSource, NULL);
-	glCompileShader(m_fragmentShaderID);
-	CheckCompileErrors(m_fragmentShaderID, "FRAGMENT");
+	sFragment = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(sFragment, 1, &fragmentSource, NULL);
+	glCompileShader(sFragment);
+	CheckCompileErrors(sFragment, "FRAGMENT");
 
 	//if geometry shader is given,also compile geometry shader
 	if (geometrySource != nullptr)
 	{
-		m_geometryShaderID = glCreateShader(GL_GEOMETRY_SHADER);
-		glShaderSource(m_geometryShaderID, 1, &geometrySource, NULL);
-		glCompileShader(m_geometryShaderID);
-		CheckCompileErrors(m_geometryShaderID, "GEOMETRY");
+		gShader = glCreateShader(GL_GEOMETRY_SHADER);
+		glShaderSource(gShader, 1, &geometrySource, NULL);
+		glCompileShader(gShader);
+		CheckCompileErrors(gShader, "GEOMETRY");
 	}
-
 	m_programID = glCreateProgram();
-	glAttachShader(m_programID, m_vertexShaderID);
-	glAttachShader(m_programID, m_fragmentShaderID);
+	glAttachShader(m_programID, sVertex);
+	glAttachShader(m_programID, sFragment);
 	if (geometrySource != nullptr)
-		glAttachShader(m_programID, m_geometryShaderID);
+		glAttachShader(m_programID, gShader);
 	glLinkProgram(m_programID);
 	CheckCompileErrors(m_programID, "PROGRAM");
-
 	// Delete the shaders as they're linked into our program now and no longer necessery
-	glDeleteShader(m_vertexShaderID);
-	glDeleteShader(m_fragmentShaderID);
+	glDeleteShader(sVertex);
+	glDeleteShader(sFragment);
 	if (geometrySource != nullptr)
-		glDeleteShader(m_geometryShaderID);
+		glDeleteShader(gShader);
 
 }
 
@@ -85,9 +83,10 @@ void Shader::Load(const std::string & vShaderFile, const std::string & fShaderFi
 	Compile(vShaderCode, fShaderCode);
 }
 
-void Shader::Use()
+Shader& Shader::Use()
 {
 	glUseProgram(m_programID);
+	return *this;
 }
 
 void Shader::CheckCompileErrors(GLuint object, const std::string & type)
