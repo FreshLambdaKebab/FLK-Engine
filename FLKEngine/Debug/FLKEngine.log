@@ -6,10 +6,5 @@ c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(279): warn
 c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(280): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
 c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(286): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
 c:\users\duran_000\documents\github\flk-engine\flkengine\src\main.cpp(287): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-  ResourceManager.cpp
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\shader.h(34): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-  Generating Code...
-  Skipping... (no relevant changes detected)
-  TextRenderer.cpp
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.exe
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.pdb (Partial PDB)

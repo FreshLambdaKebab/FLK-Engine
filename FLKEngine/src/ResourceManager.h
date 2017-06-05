@@ -9,8 +9,6 @@
 class ResourceManager
 {
 public:
-	~ResourceManager();
-
 	//load and generate shader program from a file
 	static Shader LoadShader(const GLchar* vShaderFile, const GLchar* fShaderFile, const GLchar* gShaderFile, const std::string& name);
 
@@ -27,7 +25,7 @@ public:
 	static void Clear();
 
 private:
-	ResourceManager();
+	ResourceManager(){}
 
 	//load shaders and textures from files
 	static Shader LoadShaderFromFile(const GLchar* vFileName, const GLchar* fFileName, const GLchar* gFileName = nullptr);

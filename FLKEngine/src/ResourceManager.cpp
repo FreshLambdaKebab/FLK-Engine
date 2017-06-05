@@ -10,10 +10,6 @@
 std::map<std::string, Shader>ResourceManager::m_shaders;
 std::map<std::string, Texture2D>ResourceManager::m_textures;
 
-ResourceManager::~ResourceManager()
-{
-}
-
 Shader ResourceManager::LoadShader(const GLchar* vShaderFile, const GLchar* fShaderFile, const GLchar* gShaderFile, const std::string& name)
 {
 	m_shaders[name] = LoadShaderFromFile(vShaderFile, fShaderFile, gShaderFile);
@@ -97,11 +93,11 @@ Texture2D ResourceManager::LoadTextureFromFile(const GLchar * file, GLboolean al
 {
 	//create texture object
 	Texture2D texture;
-
-	if (alpha)
+	texture.Load(file, alpha);
+	/*if (alpha)
 	{
-		texture.SetInternalFormat(GL_RGBA);
-		texture.SetImageFormat(GL_RGBA);
+		texture.GetInternalFormat() = GL_RGBA;
+		texture.GetImageFormat() = GL_RGBA;
 	}
 
 	//load teh image
@@ -112,7 +108,7 @@ Texture2D ResourceManager::LoadTextureFromFile(const GLchar * file, GLboolean al
 	texture.Generate(width, height, image);
 
 	//free image data
-	SOIL_free_image_data(image);
+	SOIL_free_image_data(image);*/
 
 	return texture;
 }

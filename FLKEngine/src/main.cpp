@@ -54,7 +54,7 @@ int main(int argc,char* argv[])
 	glEnable(GL_DEPTH_TEST);
 
 	// Define the viewport dimensions
-	//glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	//glEnable(GL_CULL_FACE);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -160,7 +160,7 @@ int main(int argc,char* argv[])
 	//load texture
 	//ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
 	Texture2D texture;
-	texture.Load("res/textures/awesomeface.png",GL_FALSE);
+	texture.Load("res/textures/bg.jpeg",GL_FALSE);
 
 	InputManager inputManager;
 
@@ -202,13 +202,13 @@ int main(int argc,char* argv[])
 
 		//do shit
 		//clear the screen to a desired color
-		glClearColor(0.2f, 0.3f, 0.0f, 1.0f);
+		glClearColor(0.2f, 0.8f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//bind teh texture
 		texture.Bind();
-		ResourceManager::GetShader("colorShader").Use();
 		//ResourceManager::GetTexture("face").Bind();
+		ResourceManager::GetShader("colorShader").Use();
 
 		//create camera/view transformations
 		glm::mat4 view = camera.GetViewMatrix();
