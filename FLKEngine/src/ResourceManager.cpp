@@ -17,19 +17,19 @@ Shader ResourceManager::LoadShader(const GLchar* vShaderFile, const GLchar* fSha
 	return m_shaders[name];
 }
 
-Shader ResourceManager::GetShader(const std::string& name)
+Shader& ResourceManager::GetShader(const std::string& name)
 {
 	return m_shaders[name];
 }
 
-Texture2D ResourceManager::LoadTexture(const GLchar * file, GLboolean alpha,const std::string& name)
+const Texture2D ResourceManager::LoadTexture(const GLchar * file, GLboolean alpha, const std::string& name)
 {
 	m_textures[name] = LoadTextureFromFile(file, alpha);
 
 	return m_textures[name];
 }
 
-Texture2D ResourceManager::GetTexture(const std::string& name)
+const Texture2D& ResourceManager::GetTexture(const std::string& name)
 {
 	return m_textures[name];
 }
@@ -45,7 +45,7 @@ void ResourceManager::Clear()
 		glDeleteTextures(1, &it.second.GetID());
 }
 
-Shader ResourceManager::LoadShaderFromFile(const GLchar * vShaderFile, const GLchar * fShaderFile, const GLchar * gShaderFile)
+const Shader ResourceManager::LoadShaderFromFile(const GLchar * vShaderFile, const GLchar * fShaderFile, const GLchar * gShaderFile)
 {
 	// 1. Retrieve the vertex/fragment source code from filePath
 	std::string vertexCode;
@@ -89,12 +89,12 @@ Shader ResourceManager::LoadShaderFromFile(const GLchar * vShaderFile, const GLc
 	return shader;
 }
 
-Texture2D ResourceManager::LoadTextureFromFile(const GLchar * file, GLboolean alpha)
+const Texture2D ResourceManager::LoadTextureFromFile(const GLchar * file, GLboolean alpha)
 {
 	//create texture object
 	Texture2D texture;
-	texture.Load(file, alpha);
-	/*if (alpha)
+
+	if (alpha)
 	{
 		texture.GetInternalFormat() = GL_RGBA;
 		texture.GetImageFormat() = GL_RGBA;
@@ -108,7 +108,7 @@ Texture2D ResourceManager::LoadTextureFromFile(const GLchar * file, GLboolean al
 	texture.Generate(width, height, image);
 
 	//free image data
-	SOIL_free_image_data(image);*/
+	SOIL_free_image_data(image);
 
 	return texture;
 }

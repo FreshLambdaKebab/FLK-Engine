@@ -158,9 +158,7 @@ int main(int argc,char* argv[])
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
 
 	//load texture
-	//ResourceManager::LoadTexture("res/textures/awesomeface.png", GL_TRUE, "face");
-	Texture2D texture;
-	texture.Load("res/textures/bg.jpeg",GL_FALSE);
+	ResourceManager::LoadTexture("res/textures/bg.jpeg", GL_FALSE, "bill");
 
 	InputManager inputManager;
 
@@ -206,8 +204,8 @@ int main(int argc,char* argv[])
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//bind teh texture
-		texture.Bind();
-		//ResourceManager::GetTexture("face").Bind();
+		//texture.Bind();
+		ResourceManager::GetTexture("bill").Bind();
 		ResourceManager::GetShader("colorShader").Use();
 
 		//create camera/view transformations

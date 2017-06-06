@@ -17,7 +17,6 @@ Texture2D::Texture2D() :
 
 Texture2D::~Texture2D()
 {
-	glDeleteTextures(1, &m_ID);
 }
 
 void Texture2D::Generate(GLuint width,GLuint height, unsigned char * data)
