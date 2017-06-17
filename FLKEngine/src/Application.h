@@ -3,8 +3,8 @@
 #include <GL\glew.h>
 #include <SDL\SDL.h>
 #include <GLFW\glfw3.h>
-#include "InputManager.h"
-#include "Camera.h"
+#include "IO/InputManager.h"
+#include "tools/Camera.h"
 
 class Application
 {
@@ -12,18 +12,20 @@ public:
 	Application();
 	~Application();
 
+	//initialize and update everything
 	void Run();
-	void Initialize();
 
 private:
+	void Initialize();//initialize and load textures,sprites etc
 	void Update();
 	void Render();
-	void ProcessInput();
 
-	void do_movement(InputManager& input);
-	void mouse_callback(int xpos, int ypos);
+	void DoMovement(InputManager& input);
+	void HandleMouse(int xpos, int ypos);
 
-	//just some constants
+private:
+
+	//constants
 	const int m_screenWidth = 800;
 	const int m_screenHeight = 600;
 	const std::string m_windowTitle = "God damn fucking window";
@@ -37,7 +39,7 @@ private:
 	GLfloat m_dt;
 	GLfloat m_lastFrame;
 
-	//input manager
+	//input
 	InputManager m_inputManager;
 
 	//sdl window pointer

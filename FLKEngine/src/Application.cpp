@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "ResourceManager.h"
+#include "tools/ResourceManager.h"
 
 //setup vertices for triangle
 GLfloat vertices[] = {
@@ -76,6 +76,7 @@ Application::Application() :
 
 Application::~Application()
 {
+	//clear all resources
 	ResourceManager::Clear();
 
 	//delete arrays buffers and shaders & textures
@@ -167,55 +168,6 @@ void Application::Initialize()
 
 void Application::Update()
 {
-	//handle events
-	ProcessInput();
-}
-
-void Application::Render()
-{
-	//do shit
-	//clear the screen to a desired color
-	glClearColor(0.2f, 0.8f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//bind teh texture
-	//texture.Bind();
-	ResourceManager::GetTexture("bill").Bind();
-	ResourceManager::GetShader("colorShader").Use();
-
-	//create camera/view transformations
-	glm::mat4 view = m_camera.GetViewMatrix();
-
-	//projection
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(m_fov), static_cast<GLfloat>(m_screenWidth) / static_cast<GLfloat>(m_screenHeight), 0.1f, 100.0f);
-	//get the uniform locations & pass them to the shader
-	ResourceManager::GetShader("colorShader").SetMatrix4("view", view, GL_TRUE);
-	ResourceManager::GetShader("colorShader").SetMatrix4("projection", projection, GL_TRUE);
-
-	//move camera around
-	do_movement(m_inputManager);
-	mouse_callback((float)m_inputManager.GetMouseCoords().x, (float)m_inputManager.GetMouseCoords().y);
-
-	for (GLuint i = 0; i < 10; i++)
-	{
-		//calculate the model matrix for each object
-		glm::mat4 model;
-		model = glm::translate(model, cubePositions[i]);
-		GLfloat angle = 20.0f * i;
-		model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
-		ResourceManager::GetShader("colorShader").SetMatrix4("model", model, GL_TRUE);
-
-		//draw the triangle from the 3 vertices
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-	}
-
-	SDL_GL_SwapWindow(m_window);
-}
-
-void Application::ProcessInput()
-{
 	SDL_Event windowEvent;
 	bool quit = false;
 	//main loop
@@ -258,7 +210,50 @@ void Application::ProcessInput()
 	}
 }
 
-void Application::do_movement(InputManager & input)
+void Application::Render()
+{
+	//do shit
+	//clear the screen to a desired color
+	glClearColor(0.2f, 0.8f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//bind teh texture
+	//texture.Bind();
+	ResourceManager::GetTexture("bill").Bind();
+	ResourceManager::GetShader("colorShader").Use();
+
+	//create camera/view transformations
+	glm::mat4 view = m_camera.GetViewMatrix();
+
+	//projection
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(m_fov), static_cast<GLfloat>(m_screenWidth) / static_cast<GLfloat>(m_screenHeight), 0.1f, 100.0f);
+	//get the uniform locations & pass them to the shader
+	ResourceManager::GetShader("colorShader").SetMatrix4("view", view, GL_TRUE);
+	ResourceManager::GetShader("colorShader").SetMatrix4("projection", projection, GL_TRUE);
+
+	//move camera around
+	DoMovement(m_inputManager);
+	HandleMouse((float)m_inputManager.GetMouseCoords().x, (float)m_inputManager.GetMouseCoords().y);
+
+	for (GLuint i = 0; i < 10; i++)
+	{
+		//calculate the model matrix for each object
+		glm::mat4 model;
+		model = glm::translate(model, cubePositions[i]);
+		GLfloat angle = 20.0f * i;
+		model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
+		ResourceManager::GetShader("colorShader").SetMatrix4("model", model, GL_TRUE);
+
+		//draw the triangle from the 3 vertices
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	}
+
+	SDL_GL_SwapWindow(m_window);
+}
+
+void Application::DoMovement(InputManager & input)
 {
 	//camera movement
 	//keyboard input
@@ -274,7 +269,7 @@ void Application::do_movement(InputManager & input)
 }
 
 bool firstMouse = true;
-void Application::mouse_callback(int xpos, int ypos)
+void Application::HandleMouse(int xpos, int ypos)
 {
 	SDL_GetMouseState(&xpos, &ypos);
 
