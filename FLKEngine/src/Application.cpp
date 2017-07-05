@@ -4,47 +4,47 @@
 
 //setup vertices for triangle
 GLfloat vertices[] = {
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-	0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f,  0.5f, -0.5f,
+	0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
 
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,
+	0.5f, -0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
 
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
 
-	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
 
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-	0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-	0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f,  0.5f,
+	0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f, -0.5f,
 
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-	0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+	-0.5f,  0.5f, -0.5f,
+	0.5f,  0.5f, -0.5f,
+	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f, -0.5f,
 };
 
 glm::vec3 cubePositions[] = {
@@ -68,7 +68,9 @@ Application::Application() :
 	m_dt(0.0f),
 	m_lastFrame(0.0f),
 	m_window(nullptr),
-	m_VAO(0),
+	//m_VAO(0),
+	m_cubeVAO(0),
+	m_lightVAO(0),
 	m_VBO(0),
 	m_EBO(0)
 {
@@ -82,7 +84,8 @@ Application::~Application()
 	//delete arrays buffers and shaders & textures
 	glDeleteBuffers(1, &m_VBO);
 	glDeleteBuffers(1, &m_EBO);
-	glDeleteVertexArrays(1, &m_VAO);
+	//glDeleteVertexArrays(1, &m_VAO);
+	glDeleteVertexArrays(1, &m_cubeVAO);
 
 	SDL_GL_DeleteContext(m_context);
 	SDL_Quit();
@@ -93,7 +96,7 @@ void Application::Run()
 	//initialize everything
 	Initialize();
 
-	Update();
+	Loop();
 }
 
 void Application::Initialize()
@@ -123,10 +126,8 @@ void Application::Initialize()
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//create a vertex array object
-	glGenVertexArrays(1, &m_VAO);
-	glBindVertexArray(m_VAO);
-
+	//create the cube VAO
+	glGenVertexArrays(1, &m_cubeVAO);
 	//create a vertex buffer object and copy the data to it
 	glGenBuffers(1, &m_VBO);
 
@@ -134,39 +135,42 @@ void Application::Initialize()
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	//create an element array
-	glGenBuffers(1, &m_EBO);
-
-	GLuint indices[] = {
-		0, 1, 3,//first triangle
-		1, 2, 3//second triangle
-	};
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	//create and compile the shaders
-	ResourceManager::LoadShader("res/shaders/colorShader.vert", "res/shaders/colorShader.frag", nullptr, "colorShader");
+	glBindVertexArray(m_cubeVAO);
 
 	//specify the layout of the vertex data
-	GLint posAttrib = glGetAttribLocation(ResourceManager::GetShader("colorShader").GetProgramID(), "position");
-	glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (GLvoid*)0);
+	//GLint posAttrib = glGetAttribLocation(ResourceManager::GetShader("lightShader").GetProgramID(), "aPos");
+	//glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	//glEnableVertexAttribArray(posAttrib);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
 
-	GLint colorAttrib = glGetAttribLocation(ResourceManager::GetShader("colorShader").GetProgramID(), "color");
-	glEnableVertexAttribArray(colorAttrib);
-	glVertexAttribPointer(colorAttrib, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+	//create the light VAO
+	glGenVertexArrays(1, &m_lightVAO);
+	glBindVertexArray(m_lightVAO);
 
-	GLint texAttrib = glGetAttribLocation(ResourceManager::GetShader("colorShader").GetProgramID(), "texcoord");
-	glEnableVertexAttribArray(texAttrib);
-	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	//load texture
-	ResourceManager::LoadTexture("res/textures/bg.jpeg", GL_FALSE, "bill");
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	//create an element array
+	/*glGenBuffers(1, &m_EBO);
+
+	/GLuint indices[] = {
+		0, 1, 3,//first triangle
+		1, 2, 3//second triangle
+	};*/
+
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	//create and compile the shaders
+	ResourceManager::LoadShader("res/shaders/lightShader.vert", "res/shaders/lightShader.frag", nullptr, "lightShader");
+	ResourceManager::LoadShader("res/shaders/lampShader.vert", "res/shaders/lampShader.frag", nullptr, "lampShader");
 
 }
 
-void Application::Update()
+void Application::Loop()
 {
 	SDL_Event windowEvent;
 	bool quit = false;
@@ -204,6 +208,9 @@ void Application::Update()
 
 		}
 
+		//update input etc
+		Update();
+
 		//draw shit
 		Render();
 
@@ -217,40 +224,47 @@ void Application::Render()
 	glClearColor(0.2f, 0.8f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//bind teh texture
-	//texture.Bind();
-	ResourceManager::GetTexture("bill").Bind();
-	ResourceManager::GetShader("colorShader").Use();
+	//activate light and lamp shaders
+	ResourceManager::GetShader("lightShader").Use();
+	ResourceManager::GetShader("lightShader").SetVector3f("objectColor",1.0f,0.5f,0.31f);
+	ResourceManager::GetShader("lightShader").SetVector3f("lightColor", 1.0f, 1.0f, 1.0f);
 
-	//create camera/view transformations
+	// view/projection transformations
+	glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<GLfloat>(m_screenWidth) / static_cast<GLfloat>(m_screenHeight), 0.1f, 100.0f);
 	glm::mat4 view = m_camera.GetViewMatrix();
+	ResourceManager::GetShader("lightShader").SetMatrix4("projection", projection, GL_TRUE);
+	ResourceManager::GetShader("lightShader").SetMatrix4("view", view, GL_TRUE);
 
-	//projection
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(m_fov), static_cast<GLfloat>(m_screenWidth) / static_cast<GLfloat>(m_screenHeight), 0.1f, 100.0f);
-	//get the uniform locations & pass them to the shader
-	ResourceManager::GetShader("colorShader").SetMatrix4("view", view, GL_TRUE);
-	ResourceManager::GetShader("colorShader").SetMatrix4("projection", projection, GL_TRUE);
+	// world transformation
+	glm::mat4 model;
+	ResourceManager::GetShader("lightShader").SetMatrix4("model", model,true);
 
+	//firstly render the cube
+	glBindVertexArray(m_cubeVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	//secondly setup & render the lamp object
+	ResourceManager::GetShader("lampShader").Use();
+	ResourceManager::GetShader("lampShader").SetMatrix4("projection", projection,true);
+	ResourceManager::GetShader("lampShader").SetMatrix4("view", view,true);
+	model = glm::mat4();
+	glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+	model = glm::translate(model, lightPos);
+	model = glm::scale(model, glm::vec3(0.2f)); // a smaller cube
+	ResourceManager::GetShader("lampShader").SetMatrix4("model", model,true);
+	
+	//draw light/lamp cube
+	glBindVertexArray(m_lightVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	SDL_GL_SwapWindow(m_window);
+}
+
+void Application::Update()
+{
 	//move camera around
 	DoMovement(m_inputManager);
 	HandleMouse((float)m_inputManager.GetMouseCoords().x, (float)m_inputManager.GetMouseCoords().y);
-
-	for (GLuint i = 0; i < 10; i++)
-	{
-		//calculate the model matrix for each object
-		glm::mat4 model;
-		model = glm::translate(model, cubePositions[i]);
-		GLfloat angle = 20.0f * i;
-		model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
-		ResourceManager::GetShader("colorShader").SetMatrix4("model", model, GL_TRUE);
-
-		//draw the triangle from the 3 vertices
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-	}
-
-	SDL_GL_SwapWindow(m_window);
 }
 
 void Application::DoMovement(InputManager & input)

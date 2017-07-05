@@ -1,11 +1,14 @@
 ﻿  Application.cpp
 c:\users\duran_000\documents\github\flk-engine\flkengine\src\graphics\shader.h(34): warning C4244: 'argument': conversion from 'GLfloat' to 'GLint', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(74): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(177): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(237): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(278): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(279): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(285): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
-c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(286): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(76): warning C4244: 'initializing': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(181): warning C4244: 'initializing': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(267): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(292): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(293): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(299): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+c:\users\duran_000\documents\github\flk-engine\flkengine\src\application.cpp(300): warning C4244: '=': conversion from 'int' to 'GLfloat', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  main.cpp
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.exe
   FLKEngine.vcxproj -> C:\Users\duran_000\Documents\GitHub\FLK-Engine\Debug\FLKEngine.pdb (Partial PDB)

@@ -17,8 +17,9 @@ public:
 
 private:
 	void Initialize();//initialize and load textures,sprites etc
-	void Update();
+	void Loop();
 	void Render();
+	void Update();
 
 	void DoMovement(InputManager& input);
 	void HandleMouse(int xpos, int ypos);
@@ -46,7 +47,9 @@ private:
 	SDL_Window* m_window;
 	SDL_GLContext m_context;
 
-	GLuint m_VAO;
+	//GLuint m_VAO;
+	GLuint m_cubeVAO;
+	GLuint m_lightVAO;
 	GLuint m_VBO;
 	GLuint m_EBO;
 };
