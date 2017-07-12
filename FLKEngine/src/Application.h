@@ -52,5 +52,8 @@ private:
 	GLuint m_lightVAO;
 	GLuint m_VBO;
 	GLuint m_EBO;
+
+	//position of light
+	glm::vec3 m_lightPos;
 };
 

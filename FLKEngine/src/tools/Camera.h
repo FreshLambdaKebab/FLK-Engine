@@ -33,6 +33,8 @@ public:
 		return glm::lookAt(m_position, m_position + m_front, m_up);
 	}
 
+	glm::vec3 GetPosition()const { return m_position; }
+
 	void ProcessKeyboard(const Cam_Movement& dir, GLfloat dt);
 	void ProcessMouse(GLfloat xoffset, GLfloat yoffset, GLboolean constrainPitch = true);
 

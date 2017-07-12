@@ -4,47 +4,47 @@
 
 //setup vertices for triangle
 GLfloat vertices[] = {
-	-0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-	-0.5f, -0.5f,  0.5f,
-	0.5f, -0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+	0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
 
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-	0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
+	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f, -0.5f,
-	0.5f, -0.5f,  0.5f,
-	0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-	-0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f, -0.5f,
-	0.5f,  0.5f,  0.5f,
-	0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
 
 glm::vec3 cubePositions[] = {
@@ -61,7 +61,7 @@ glm::vec3 cubePositions[] = {
 };
 
 Application::Application() :
-	m_camera(glm::vec3(0.0f, 0.0f, 1.0f)),
+	m_camera(glm::vec3(0.0f, 0.0f, 3.0f)),
 	m_lastX(m_screenWidth / 2),
 	m_lastY(m_screenHeight / 2),
 	m_fov(45.0f),
@@ -72,7 +72,8 @@ Application::Application() :
 	m_cubeVAO(0),
 	m_lightVAO(0),
 	m_VBO(0),
-	m_EBO(0)
+	m_EBO(0),
+	m_lightPos(glm::vec3(1.2f,1.0f,2.0f))
 {
 }
 
@@ -138,11 +139,12 @@ void Application::Initialize()
 	glBindVertexArray(m_cubeVAO);
 
 	//specify the layout of the vertex data
-	//GLint posAttrib = glGetAttribLocation(ResourceManager::GetShader("lightShader").GetProgramID(), "aPos");
-	//glVertexAttribPointer(posAttrib, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	//glEnableVertexAttribArray(posAttrib);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	//position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	//normal attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	//create the light VAO
 	glGenVertexArrays(1, &m_lightVAO);
@@ -150,19 +152,8 @@ void Application::Initialize()
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
-	//create an element array
-	/*glGenBuffers(1, &m_EBO);
-
-	/GLuint indices[] = {
-		0, 1, 3,//first triangle
-		1, 2, 3//second triangle
-	};*/
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	//create and compile the shaders
 	ResourceManager::LoadShader("res/shaders/lightShader.vert", "res/shaders/lightShader.frag", nullptr, "lightShader");
@@ -221,13 +212,16 @@ void Application::Render()
 {
 	//do shit
 	//clear the screen to a desired color
-	glClearColor(0.2f, 0.8f, 0.0f, 1.0f);
+	glClearColor(0.2f, 0.4f, 0.1f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//set uniforms and shit
 	//activate light and lamp shaders
 	ResourceManager::GetShader("lightShader").Use();
 	ResourceManager::GetShader("lightShader").SetVector3f("objectColor",1.0f,0.5f,0.31f);
 	ResourceManager::GetShader("lightShader").SetVector3f("lightColor", 1.0f, 1.0f, 1.0f);
+	ResourceManager::GetShader("lightShader").SetVector3f("lightPos", m_lightPos);
+	ResourceManager::GetShader("lightShader").SetVector3f("viewPos", m_camera.GetPosition());
 
 	// view/projection transformations
 	glm::mat4 projection = glm::perspective(glm::radians(m_fov), static_cast<GLfloat>(m_screenWidth) / static_cast<GLfloat>(m_screenHeight), 0.1f, 100.0f);
@@ -265,6 +259,10 @@ void Application::Update()
 	//move camera around
 	DoMovement(m_inputManager);
 	HandleMouse((float)m_inputManager.GetMouseCoords().x, (float)m_inputManager.GetMouseCoords().y);
+
+	//move lights position over time
+	m_lightPos.x = 1.0f + sin(glfwGetTime()) * 2.0f;
+	m_lightPos.y = sin(glfwGetTime() / 2.0f) * 1.0f;
 }
 
 void Application::DoMovement(InputManager & input)
